@@ -1,35 +1,49 @@
-import { Tabs } from 'expo-router';
+// app/tabs/_layout.js
 import React from 'react';
+import { Tabs } from 'expo-router';
+import { Platform } from 'react-native';
+import AntDesign from '@expo/vector-icons/AntDesign';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import Foundation from '@expo/vector-icons/Foundation';
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
+        tabBarActiveTintColor: '#882345', // NMSU crimson,
+        tabBarStyle: {
+          height: Platform.OS === 'ios' ? 84 : 64,
+          paddingBottom: Platform.OS === 'ios' ? 20 : 10,
+        }
+      }}
+    >
+      <Tabs.Screen name="index" options={{
+        title: 'Home', tabBarIcon: ({ color }) => (
+          <AntDesign name="home" size={20} color={color} />
+        )
+      }} />
+      <Tabs.Screen name="search" options={{
+        title: 'Search', tabBarIcon: ({ color }) => (
+          <FontAwesome name="search" size={20} color={color} />
+        )
+      }} />
+      <Tabs.Screen name="post" options={{
+        title: 'Post', tabBarIcon: ({ color }) => (
+          <MaterialIcons name="add-box" size={20} color={color} />
+        )
+      }} />
+      <Tabs.Screen name="lost" options={{
+        title: 'Lost', tabBarIcon: ({ color }) => (
+          <Foundation name="alert" size={20} color={color} />
+        )
+      }} />
+      <Tabs.Screen name="claims" options={{
+        title: 'Claims', tabBarIcon: ({ color }) => (
+          <FontAwesome name="check-circle" size={20} color={color} />
+        )
+      }} />
     </Tabs>
   );
 }
